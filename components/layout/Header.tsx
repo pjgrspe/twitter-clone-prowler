@@ -31,4 +31,4 @@ const Header: React.FC<HeaderProps> = ({label, showBackArrow}) => {
   )
 }
 
-export default Header
+export default Header;
