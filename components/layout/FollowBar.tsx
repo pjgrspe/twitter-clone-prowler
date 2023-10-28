@@ -13,4 +13,4 @@ const FollowBar = () => {
   )
 }
 
-export default FollowBar
+export default FollowBar;
