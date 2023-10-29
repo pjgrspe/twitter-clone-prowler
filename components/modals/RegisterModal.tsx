@@ -1,10 +1,13 @@
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
-import React, { useCallback, useState } from 'react'
+
 import Input from '../Input';
 import Modal from '../Modal';
-import { log } from 'console';
+
+import React, { useCallback, useState } from 'react'
 import axios from 'axios';
+import {toast} from 'react-hot-toast';
+import {signIn} from 'next-auth/react';
 
 const RegisterModal = () => {
     const loginModal= useLoginModal();
@@ -34,11 +37,19 @@ const RegisterModal = () => {
                 password,
                 username,
                 name
-            })
+            });
 
+            toast.success('Account created.');
+
+            signIn('credentials', {
+                email,
+                password
+            });
+            
             loginModal.onClose();
         } catch(error) {
         console.log(error);
+        toast.error('Something went wrong.');
         } finally {
             setIsLoading(false);
         }
@@ -61,7 +72,8 @@ const RegisterModal = () => {
             value={username}
             disabled={isLoading}
             />
-            <Input placeholder='Password' 
+            <Input placeholder='Password'
+            type='password'
             onChange={(e) => setPassword(e.target.value)} 
             value={password} 
             disabled={isLoading} 
